@@ -84,4 +84,3 @@ model_sets:
   original_esm:
     - esm2_t33_650M
     - esm2_t30_150M
-    - esm2_t12_35M
