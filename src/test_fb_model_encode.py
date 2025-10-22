@@ -14,7 +14,7 @@ import sys
 
 import numpy as np
 
-from fb_model import FBModel
+from fb_model_new import FBModel
 
 AMINO_ACIDS = "ACDEFGHIKLMNPQRSTVWY"
 
@@ -24,6 +24,28 @@ def random_protein(length):
 
 
 def main():
+    p = argparse.ArgumentParser()
+    p.add_argument('--model', default='facebook/esm2_t30_150M_UR50D',
+                   help='Pretrained model name to load via esm.pretrained.load_model_and_alphabet')
+    p.add_argument('--length', type=int, default=30, help='Random sequence length')
+    p.add_argument('--use-cuda', action='store_true', help='Move model/tokens to CUDA if available')
+    args = p.parse_args()
+
+    seq = [random_protein(args.length)]
+    model = FBModel(args.model)
+
+    inputs = model.tokenizer(seq, return_tensors='pt', padding=True, truncation=True, max_length=1024)
+    inputs = {k: v.to(model.device) for k, v in inputs.items()}
+    with torch.no_grad():
+        outputs = model.model(**inputs, output_attentions=True, return_dict=True)
+    print(outputs.logits.shape)
+    
+    hidden_states = outputs.hidden_states
+    print(outputs.keys())
+    print(hidden_states)
+
+
+def _main():
     p = argparse.ArgumentParser()
     p.add_argument('--model', default='esm1_t6_43M_UR50S',
                    help='Pretrained model name to load via esm.pretrained.load_model_and_alphabet')

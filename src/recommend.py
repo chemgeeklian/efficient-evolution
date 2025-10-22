@@ -1,5 +1,5 @@
 import os
-from amis import reconstruct_multi_models
+from amis_new import reconstruct_multi_models
 
 def parse_args():
     import argparse
@@ -11,7 +11,7 @@ def parse_args():
     parser.add_argument(
         '--model-names',
         type=str,
-        default=[ 'esm1b', 'esm1v1', 'esm1v2', 'esm1v3', 'esm1v4', 'esm1v5', ],
+        default=[ 'esm2_t6_8M','esm2_t12_35M' ],
         nargs='+',
         help='Type of language model (e.g., esm1b, esm1v1)'
     )
@@ -41,11 +41,8 @@ if __name__ == '__main__':
         args.model_names,
         alpha=args.alpha,
     )
-    for k, v in sorted(mutations_models.items(), key=lambda item: -item[1]):
-        mut_str = f'{k[1]}{k[0] + 1}{k[2]}'
-        print(f'{mut_str}\t{v}')
+    print(mutations_models)
 
-
-## # python bin/recommend.py MQWQTKLPLIAILRGITPDEALAHVGAVIDAGFDAVEIPLNSPQWEQSIPAIVDAYGDKALIGAGTVLKPEQVDALARMGCQLIVTPNIHSEVIRRAVGYGMTVCPGCATATEAFTALEAGAQALKIFPSSAFGPQYIKALKAVLPSDIAVFAVGGVTPENLAQWIDAGCAGAGLGSDLYRAGQSVERTAQQAAAFVKAYREAVQ
+# python bin/recommend.py MQWQTKLPLIAILRGITPDEALAHVGAVIDAGFDAVEIPLNSPQWEQSIPAIVDAYGDKALIGAGTVLKPEQVDALARMGCQLIVTPNIHSEVIRRAVGYGMTVCPGCATATEAFTALEAGAQALKIFPSSAFGPQYIKALKAVLPSDIAVFAVGGVTPENLAQWIDAGCAGAGLGSDLYRAGQSVERTAQQAAAFVKAYREAVQ
 
 # python src/recommend.py MQWQTKLPLIAILRGITPDEALAHVGAVIDAGFDAVEIPLNSPQWEQSIPAIVDAYGDKALIGAGTVLKPEQVDALARMGCQLIVTPNIHSEVIRRAVGYGMTVCPGCATATEAFTALEAGAQALKIFPSSAFGPQYIKALKAVLPSDIAVFAVGGVTPENLAQWIDAGCAGAGLGSDLYRAGQSVERTAQQAAAFVKAYREAVQ
