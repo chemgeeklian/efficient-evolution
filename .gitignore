@@ -17,4 +17,5 @@ plots*
 target*
 temp*
 __pycache__
-output//bin/
+output/
+bin/
