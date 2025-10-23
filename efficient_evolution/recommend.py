@@ -1,11 +1,14 @@
 import argparse
-from amis_new import reconstruct_multi_models
 from pathlib import Path
 import datetime
 import csv
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import SeqIO
+try:
+    from efficient_evolution.amis_new import reconstruct_multi_models
+except ImportError:
+    from amis_new import reconstruct_multi_models
 
 
 if __name__ == '__main__':
@@ -98,4 +101,4 @@ if __name__ == '__main__':
         print(f'[INFO] Wrote mutated FASTA to: {fasta_path}')
 
 
-# python src/recommend.py MQWQTNLPLIAILRGITPDEALAHVGAVIDAGFDAVEIPLNSPQWEKSIPQVVDAYGEQALIGAGTVLQPEQVDRLAAMGCRLIVTPNIQPEVIRRAVGYGMTVCPGCATASEAFSALDAGAQALKIFPSSAFGPDYIKALKAVLPPEVPVFAVGGVTPENLAQWINAGCVGAGLGSDLYRAGQSVERTAQQAAAFVKAYREAVK
+# python recommend.py MQWQTNLPLIAILRGITPDEALAHVGAVIDAGFDAVEIPLNSPQWEKSIPQVVDAYGEQALIGAGTVLQPEQVDRLAAMGCRLIVTPNIQPEVIRRAVGYGMTVCPGCATASEAFSALDAGAQALKIFPSSAFGPDYIKALKAVLPPEVPVFAVGGVTPENLAQWINAGCVGAGLGSDLYRAGQSVERTAQQAAAFVKAYREAVK

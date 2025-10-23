@@ -27,12 +27,7 @@ dependencies = [
     "scanpy>=1.9.1",
     "networkx>=2.8.8",
     "tqdm>=4.64.1",
-]
-
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.2.0",
-    "pytest-cov",
+    "transformers>=4.26.2",
 ]
 
 [project.scripts]

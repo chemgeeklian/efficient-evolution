@@ -1,9 +1,6 @@
 import torch
 from transformers import EsmForMaskedLM, EsmTokenizer
 import numpy as np
-from pathlib import Path
-from tqdm import tqdm
-from Bio import SeqIO
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 

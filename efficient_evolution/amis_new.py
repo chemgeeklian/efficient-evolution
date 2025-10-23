@@ -3,8 +3,10 @@ import yaml
 import sys
 import numpy as np
 import scipy.special
-from fb_model_new import FBModel
-
+try:
+    from efficient_evolution.fb_model_new import FBModel
+except ImportError:
+    from fb_model_new import FBModel
 
 def _config_path():
     # config/models.yaml at repo root
