@@ -1,71 +1,47 @@
 models:
   esm2_t6_8M:
-    name: "esm2_t6_8M"
     path: "facebook/esm2_t6_8M_UR50D"
-    description: "ESM-2 8M parameter model"
 
   esm2_t12_35M:
-    name: "esm2_t12_35M"
     path: "facebook/esm2_t12_35M_UR50D"
-    description: "ESM-2 35M parameter model"
 
   esm2_t30_150M:
-    name: "esm2_t30_150M"
-    path: "/eagle/projects/FoundEpidem/xlian/checkpoints/esm2_t30_150M_UR50D"
-    description: "ESM-2 150M parameter model"
+    path: "facebook/esm2_t30_150M_UR50D"
 
   esm2_t33_650M:
-    name: "esm2_t33_650M"
-    path: "/eagle/projects/FoundEpidem/xlian/checkpoints/facebook_esm2_t33_650M_UR50D"
-    description: "ESM-2 650M parameter model"
+    path: "facebook/esm2_t33_650M_UR50D"
 
   # Legacy ESM1 models (for backward compatibility)
   esm1b:
-    name: "esm1b"
     path: "facebook/esm1b_t33_650M_UR50S"
-    description: "ESM-1b 650M parameter model (legacy)"
 
   esm1v1:
-    name: "esm1v1"
     path: "facebook/esm1v_t33_650M_UR90S_1"
-    description: "ESM-1v variant 1 (legacy)"
 
   esm1v2:
-    name: "esm1v2"
     path: "facebook/esm1v_t33_650M_UR90S_2"
-    description: "ESM-1v variant 2 (legacy)"
 
   esm1v3:
-    name: "esm1v3"
     path: "facebook/esm1v_t33_650M_UR90S_3"
-    description: "ESM-1v variant 3 (legacy)"
 
   esm1v4:
-    name: "esm1v4"
     path: "facebook/esm1v_t33_650M_UR90S_4"
-    description: "ESM-1v variant 4 (legacy)"
 
   esm1v5:
-    name: "esm1v5"
     path: "facebook/esm1v_t33_650M_UR90S_5"
-    description: "ESM-1v variant 5 (legacy)"
 
   # Fine-tuned ESM2 models
   esm2-dgoa-650M:
-    name: "esm2-dgoa-650M"
     path: "/eagle/projects/FoundEpidem/xlian/checkpoints/dgoa-esm/dgoa-runs-650M/checkpoint-2210"
-    description: "ESM-2 fine-tuned on DGOA dataset (650M)"
 
   esm2-dgoa-150M:
-    name: "esm2-dgoa-150M"
     path: "/eagle/projects/FoundEpidem/xlian/checkpoints/dgoa-esm/dgoa-runs-150M/checkpoint-2210"
-    description: "ESM-2 fine-tuned on DGOA dataset (150M)"
 
 
 model_sets:
   esm2_original_debug:
       - esm2_t6_8M
-      - esm2_t12_35M
+      - esm2_t33_650M
 
   esm2_finetuned:
     - esm2-dgoa-650M

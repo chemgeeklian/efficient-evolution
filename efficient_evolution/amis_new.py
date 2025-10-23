@@ -165,11 +165,7 @@ def reconstruct_multi_models(wt_seq,
     mutations_model_names = {}
 
     for model_name in model_names:
-        try:
-            model = get_model_name(model_name)
-        except Exception:
-            print(f'Failed to load model {model_name}. Skipping.')
-            continue
+        model = get_model_name(model_name)
 
         if alpha is None:
             # hard decode reconstruct
@@ -183,7 +179,7 @@ def reconstruct_multi_models(wt_seq,
                 mutations_counts[mutation] = 0
                 mutations_model_names[mutation] = []
             mutations_counts[mutation] += 1
-            mutations_model_names[mutation].append(getattr(model, 'name_', model_name))
+            mutations_model_names[mutation].append(model_name)
 
         # free model if it holds large resources
         del model
@@ -192,48 +188,3 @@ def reconstruct_multi_models(wt_seq,
         return mutations_counts, mutations_model_names
 
     return mutations_counts
-
-
-if __name__ == '__main__':
-    import argparse
-
-    p = argparse.ArgumentParser(
-        description='Run reconstruct_multi_models using model set esm2_original_debug'
-    )
-    p.add_argument(
-        '--seq', 
-        help='Input amino acid sequence to reconstruct', 
-        default='MKT'
-    )
-    p.add_argument(
-        '--alpha', 
-        type=float, 
-        default=1.0, 
-        help='Alpha threshold for soft reconstruction (default=1.0)'
-    )
-    args = p.parse_args()
-
-    seq = args.seq.strip().upper()
-    print(f'Running reconstruct_multi_models on sequence: {seq}')
-    print(f'Using model set: esm2_original_debug (defined in config/models.yaml)')
-
-    try:
-        mutations_counts, mutations_model_names = reconstruct_multi_models(
-            seq,
-            model_set='esm2_original_debug',
-            alpha=args.alpha,
-            return_names=True
-        )
-    except Exception as e:
-        print('Error during reconstruction:', e)
-        raise
-
-    # 输出结果
-    print('\n=== Mutations aggregated across models ===')
-    for mut, count in sorted(mutations_counts.items(), key=lambda x: (-x[1], x[0])):
-        pos, wt, mt = mut
-        print(f'{wt}{pos+1}{mt}\t(count={count})\tfrom {mutations_model_names[mut]}')
-
-    print('\nDone.')
-
-# python amis_new.py --seq MQWQTKLPLIAILRGITPDEALAHVGAVIDAGFDAVEIPLNSPQWEQSIPAIVDAYGDKALIGAGTVLKPEQVDALARMGCQLIVTPNIHSEVIRRAVGYGMTVCPGCATATEAFTALEAGAQALKIFPSSAFGPQYIKALKAVLPSDIAVFAVGGVTPENLAQWIDAGCAGAGLGSDLYRAGQSVERTAQQAAAFVKAYREAVQ

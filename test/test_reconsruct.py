@@ -14,7 +14,7 @@ Expected usage:
 import numpy as np
 import torch
 import scipy.special
-from fb_model import FBModel   # <-- your reference FBModel class
+from efficient_evolution.fb_model import FBModel   # <-- your reference FBModel class
 from pathlib import Path
 
 

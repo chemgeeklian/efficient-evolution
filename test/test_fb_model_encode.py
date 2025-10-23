@@ -14,7 +14,7 @@ import sys
 
 import numpy as np
 
-from fb_model_new import FBModel
+from efficient_evolution.fb_model_new import FBModel
 
 AMINO_ACIDS = "ACDEFGHIKLMNPQRSTVWY"
 

@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=65.5.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "efficient-evolution"
+version = "0.1.0"
+description = "Efficient evolution analysis and protein sequence reconstruction using ESM models"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "LICENSE"}
+authors = [
+    {name = "Efficient Evolution Contributors"}
+]
+
+dependencies = [
+    "biopython>=1.79",
+    "biotite>=0.35.0",
+    "fair-esm>=2.0.0",
+    "numpy>=1.23.4",
+    "pandas>=1.5.1",
+    "scipy>=1.9.3",
+    "scikit-learn>=1.0.2",
+    "torch>=1.12.1",
+    "matplotlib>=3.6.2",
+    "seaborn>=0.12.1",
+    "scanpy>=1.9.1",
+    "networkx>=2.8.8",
+    "tqdm>=4.64.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.2.0",
+    "pytest-cov",
+]
+
+[project.scripts]
+recommend = "efficient_evolution.recommend:main"
+
+[tool.setuptools]
+packages = ["efficient_evolution"]
+
+[tool.setuptools.package-data]
+efficient_evolution = ["*.py"]
