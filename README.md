@@ -1,34 +1,54 @@
 # Efficient evolution from general protein language models
 
-Scripts for running the analysis described in the paper ["Efficient evolution of human antibodies from general protein language models"](https://www.nature.com/articles/s41587-023-01763-2).
+This repository contains an updated implementation of the analysis described in the paper ["Efficient evolution of human antibodies from general protein language models"](https://www.nature.com/articles/s41587-023-01763-2).
 
-### Running the model
+The original scripts have been adapted to use modern ESM2 models and provide a more flexible framework for recommending mutations from custom model ensembles.
 
-To evaluate the model on a new sequence, clone this repository and run
+### Key Changes
+
+*   **ESM2 Integration**: The core model backend has been updated from legacy ESM1 to modern ESM2 models via the Hugging Face `transformers` library.
+*   **Flexible Model Configuration**: All models are now managed in `config/models.yaml`, allowing users to easily add new ESM models from Hugging Face or local fine-tuned checkpoints.
+*   **Model Set Ensembles**: The script now uses "model sets" defined in the config file to generate mutation recommendations from a consensus of multiple models (e.g., an ensemble of original and fine-tuned models).
+
+### Setup
+
+1.  Clone this repository.
+2.  Install the package and its dependencies:
+    ```bash
+    pip install .
+    ```
+
+### Usage
+
+To get mutation recommendations for a protein sequence, run the `recommend.py` script. You must specify a sequence and a model set to use.
+
 ```bash
-python bin/recommend.py [sequence]
+python -m efficient_evolution.recommend [SEQUENCE] --model-set [MODEL_SET_NAME]
 ```
-where `[sequence]` is the wildtype protein sequence you want to evolve. The script will output a list of substitutions and the number of recommending language models.
 
-To recommend mutations to antibody variable domain sequences, we have simply run the above script separately on the heavy and light chain sequences.
+**Arguments:**
+*   `[SEQUENCE]`: The wildtype protein sequence you want to evolve.
+*   `[MODEL_SET_NAME]`: The name of the model ensemble defined in `config/models.yaml` (e.g., `original_esm`, `esm2_finetuned`).
 
-We have also made a [Google Colab](https://colab.research.google.com/drive/18QLOmi5yNb1i9wztAzv981Wgk2E4IP4q?usp=sharing) notebook available. However, this notebook requires a full download and installation of the language models for each run and requires Colab Pro instances with a higher memory requirement than the free version of Colab. When making many predictions, we recommend the local installation above, as this will allow you to cache and reuse the models.
+**Example:**
 
-### Paper analysis scripts
-
-To reproduce the analysis in the paper, first download and extract data with the commands:
 ```bash
-wget https://zenodo.org/record/6968342/files/data.tar.gz
-tar xvf data.tar.gz
+# Get recommendations using the fine-tuned ESM2 models
+python -m efficient_evolution.recommend "MQWQTKLPLIAILRGITPDEALAHVGAVIDAGFDAVEIPLNSPQWEQSIPAIVDAYGDKALIGAGTVLKPEQVDALARMGCQLIVTPNIHSEVIRRAVGYGMTVCPGCATATEAFTALEAGAQALKIFPSSAFGPQYIKALKAVLPSDIAVFAVGGVTPENLAQWIDAGCAGAGLGSDLYRAGQSVERTAQQAAAFVKAYREAVQ" --model-set esm2_finetuned
 ```
 
-To acquire mutations to a given antibody, run the command
-```bash
-bash bin/eval_models.sh [antibody_name]
-```
-where `[antibody_name]` is one of `medi8852`, `medi_uca`, `mab114`, `mab114_uca`, `s309`, `regn10987`, or `c143`.
+or without installation, you can 
 
-DMS experiments can be run with the command
 ```bash
-bash bin/dms.sh
+cd efficient-evolution
+python efficient_evolution/recommend.py MQWQTNLPLIAILRGITPDEALAHVGAVIDAGFDAVEIPLNSPQWEKSIPQVVDAYGEQALIGAGTVLQPEQVDRLAAMGCRLIVTPNIQPEVIRRAVGYGMTVCPGCATASEAFSALDAGAQALKIFPSSAFGPDYIKALKAVLPPEVPVFAVGGVTPENLAQWINAGCVGAGLGSDLYRAGQSVERTAQQAAAFVKAYREAVK
 ```
+
+The script will print a list of suggested mutations and their consensus count. Detailed results are saved to a new timestamped directory inside the `output/` folder.
+
+### Configuration
+
+You can add your own models or create new ensembles by editing `config/models.yaml`:
+
+1.  **To add a new model**: Add an entry under the `models:` section with a unique name and its path (either a Hugging Face model ID or a local path to a checkpoint).
+2.  **To create a new ensemble**: Add a new list under the `model_sets:` section, referencing the names of the models you defined.
